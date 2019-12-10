@@ -1,0 +1,67 @@
+<template>
+  <form @submit.prevent="submit" class='col-lg-4 col-md-10 mx-auto mt-5'>
+    <div class="form-group">
+        <label for="">Email</label>
+        <input type="email" name="email" class="form-control" v-model="form.email">
+        <small id="helpId" class="text-muted">place enter your email</small>
+    </div>
+    <div class="form-group">
+        <label for="">Passowrd</label>
+        <input type="password" name="password" class="form-control" v-model="form.password">
+        <small id="helpId" class="text-muted">place enter your password</small>
+    </div>
+    <hr>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary w-100">Send data</button>
+    </div>
+
+
+  </form>
+</template>
+
+<script>
+  import { mapActions } from 'vuex'
+
+  export default 
+  {
+    name: 'signin',
+    components: 
+    {
+      //
+    },
+    
+    data () 
+    {
+      return {
+        form: {
+          email: '',
+          password: '',
+        }
+      }
+    },
+
+    methods: 
+    {
+      ...mapActions(
+        {
+          signIn: 'auth/signIn'
+        }
+      ),
+
+      submit ()
+      {
+        this.signIn(this.form).then(() =>
+        {
+          this.$router.replace(
+            {
+              name: 'dashboard'
+            }
+          )
+        }).catch( () => 
+        {
+          console.log('field')
+        })
+      }
+    }
+  }
+</script>
